@@ -19,13 +19,37 @@ int main(){
 }
 
 void CheckTieCondition(char Slots[9], bool Mode){
+  int TieCount = 0;
   
+  for (int i = 0; i  < 10; i += 4){
+    if (i == 0){
+      if ((Slots[i] != ' ') && ((Slots[i + 1] != Slots[i]) && (Slots[i + 1] != ' ')) || ((Slots[i + 3] != Slots[i]) && (Slots[i + 3] != ' '))){
+        TieCount++;
+      }
+    }
+    else if (i == 4){
+      if((Slots[i] != ' ') && ((Slots[i - 3] != Slots[i]) && (Slots[i - 3] != ' ')) || ((Slots[i - 1] != Slots[i]) && (Slots[i - 1] != ' ')) || ((Slots[i - 4] != Slots[i]) && (Slots[i - 4] != ' ')) || ((Slots[i - 2] != Slots[i]) && (Slots[i - 2] != ' '))){
+        TieCount++;
+      }
+    }
+    else if (i == 8){
+      if ((Slots[i] != ' ') && ((Slots[i - 3] != Slots[i]) && (Slots[i - 3] != ' ')) || ((Slots[i - 1] != Slots[i]) && (Slots[i - 1] != ' '))){
+        TieCount++;
+      }
+    }
+    printf("Tie Count: %d\n", TieCount);
+  }
+
+  if (TieCount == 3){
+    PrintBoard(Slots);
+    
+    printf("Tie\n");
+
+    Replay(Mode);
+  }
 }
 
 void CheckWinCondition(char Slots[9], bool Mode){
-  /*absolutely vile but I'm lazy rn
-  if ((Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') || (Slots[3] == 'X' && Slots[4] == 'X' && Slots[5] == 'X') || (Slots[6] == 'X' && Slots[7] == 'X' && Slots[8] == 'X') || (Slots[0] == 'X' && Slots[3] == 'X' && Slots[6] == 'X') || (Slots[1] == 'X' && Slots[4] == 'X' && Slots[7] == 'X') || (Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') ||)*/
-
   for (int i = 0; i  < 10; i += 4){
     if (i == 0){
       if ((Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X') || (Slots[i] == 'X' && Slots[i + 3] == 'X' && Slots[i + 6] == 'X')){
@@ -102,13 +126,12 @@ void PrintMainMenu(){
   }
 }
 
-//match play code
+//cpu match code
 
 void PvCMatch(){
   
 }
-
-//cpu match code
+//match play code
 
 void PvPMatch(){
   int input;
@@ -131,6 +154,8 @@ void PvPMatch(){
 
           CheckWinCondition(Moves, true);
 
+          CheckTieCondition(Moves, true);
+
           break;
         }
         else{
@@ -151,6 +176,8 @@ void PvPMatch(){
           Moves[input - 1] = 'O';
 
           CheckWinCondition(Moves, true);
+
+          CheckTieCondition(Moves, true);
 
           break;
         }
