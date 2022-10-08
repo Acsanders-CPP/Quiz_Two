@@ -1,5 +1,6 @@
 // Allows for player versus play or player versus computer tic-tac-toe matches
 #include <stdio.h>
+#include <stdbool.h>
 
 //user interface for user navagation
 
@@ -57,18 +58,20 @@ void PvPMatch(){
     if(turn){
       turn = !turn;
     
-      printf("Player 1's turn");
+      printf("Player 1's turn. Enter a number (1 -9):\n");
 
       while (true){
         scanf("%d", &input);
 
-        if (Moves[i] == ' '){
-          Moves[i] = 'X';
+        if (Moves[input - 1] == ' '){
+          Moves[input - 1] = 'X';
+
+          //CheckWinCondition();
 
           break;
         }
         else{
-          printf("Invalid Input");
+          printf("Invalid Input\n");
         }
       }
 
