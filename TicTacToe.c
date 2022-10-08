@@ -27,8 +27,22 @@ void CheckWinCondition(char Slots[9]){
 
   for (int i = 0; i  < 10; i += 4){
     if (i == 0){
-      if (Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X')
+      if (Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X'){
+        PrintBoard(Slots);
+        
+        printf("Player 1 wins\n");
+        
+        exit(0);
+      }
+      else if (Slots[i] == 'O' && Slots[i + 1] == 'O' && Slots[i + 2] == 'O'){
+        PrintBoard(Slots);
+        
+        printf("Player 2 wins\n");
+        
+        exit(0);
+      }
     }
+    else if (i == 4)
   }
 }
 
@@ -83,7 +97,7 @@ void PvPMatch(){
         if (Moves[input - 1] == ' '){
           Moves[input - 1] = 'X';
 
-          CheckWinCondition();
+          CheckWinCondition(Moves);
 
           break;
         }
@@ -96,9 +110,22 @@ void PvPMatch(){
     }else{
       turn = !turn;
     
-      printf("Player 2's turn");
+      printf("Player 2's turn. Enter a number (1 -9):\n");
 
-      scanf("%d", &input);
+      while (true){
+        scanf("%d", &input);
+
+        if (Moves[input - 1] == ' '){
+          Moves[input - 1] = 'O';
+
+          CheckWinCondition(Moves);
+
+          break;
+        }
+        else{
+          printf("Invalid Input\n");
+        }
+      }
     }
   }
 }
