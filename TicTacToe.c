@@ -4,45 +4,77 @@
 
 //user interface for user navagation
 
-void CheckTieCondition(char Slots[9]);
-void CheckWinCondition(char Slots[9]);
+void CheckTieCondition(char Slots[9], bool Mode);
+void CheckWinCondition(char Slots[9], bool Mode);
 void PrintBoard(char Slots[9]);
 void PrintMainMenu();
 void PvCMatch();
 void PvPMatch();
 void Quit();
+void Replay(bool Mode);
 
 
 int main(){
     PrintMainMenu();
 }
 
-void CheckTieCondition(char Slots[9]){
+void CheckTieCondition(char Slots[9], bool Mode){
   
 }
 
-void CheckWinCondition(char Slots[9]){
+void CheckWinCondition(char Slots[9], bool Mode){
   /*absolutely vile but I'm lazy rn
   if ((Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') || (Slots[3] == 'X' && Slots[4] == 'X' && Slots[5] == 'X') || (Slots[6] == 'X' && Slots[7] == 'X' && Slots[8] == 'X') || (Slots[0] == 'X' && Slots[3] == 'X' && Slots[6] == 'X') || (Slots[1] == 'X' && Slots[4] == 'X' && Slots[7] == 'X') || (Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') ||)*/
 
   for (int i = 0; i  < 10; i += 4){
     if (i == 0){
-      if (Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X'){
+      if ((Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X') || (Slots[i] == 'X' && Slots[i + 3] == 'X' && Slots[i + 6] == 'X')){
         PrintBoard(Slots);
         
         printf("Player 1 wins\n");
-        
-        exit(0);
+
+        Replay(Mode);
       }
-      else if (Slots[i] == 'O' && Slots[i + 1] == 'O' && Slots[i + 2] == 'O'){
+      else if ((Slots[i] == 'O' && Slots[i + 1] == 'O' && Slots[i + 2] == 'O') || (Slots[i] == 'O' && Slots[i + 3] == 'O' && Slots[i + 6] == 'O')){
         PrintBoard(Slots);
         
         printf("Player 2 wins\n");
         
-        exit(0);
+        Replay(Mode);
       }
     }
-    else if (i == 4)
+    else if (i == 4){
+      if((Slots[i] == 'X' && Slots[i - 3] == 'X' && Slots[i + 3] == 'X') || (Slots[i] == 'X' && Slots[i - 1] == 'X' && Slots[i + 1] == 'X') || (Slots[i] == 'X' && Slots[i - 4] == 'X' && Slots[i + 4] == 'X') || (Slots[i] == 'X' && Slots[i - 2] == 'X' && Slots[i + 2] == 'X')){
+        PrintBoard(Slots);
+        
+        printf("Player 1 wins\n");
+        
+        Replay(Mode);
+      }
+      else if((Slots[i] == 'O' && Slots[i - 3] == 'O' && Slots[i + 3] == 'O') || (Slots[i] == 'O' && Slots[i - 1] == 'O' && Slots[i + 1] == 'O') || (Slots[i] == 'O' && Slots[i - 4] == 'O' && Slots[i + 4] == 'O') || (Slots[i] == 'O' && Slots[i - 2] == 'O' && Slots[i + 2] == 'O')){
+        PrintBoard(Slots);
+        
+        printf("Player 2 wins\n");
+        
+        Replay(Mode);
+      }
+    }
+    else if (i == 8){
+      if ((Slots[i] == 'X' && Slots[i -  3] == 'X' && Slots[i - 6] == 'X') || (Slots[i] == 'X' && Slots[i - 1] == 'X' && Slots[i - 2] == 'X')){
+        PrintBoard(Slots);
+        
+        printf("Player 1 wins\n");
+        
+        Replay(Mode);
+      }
+      else if ((Slots[i] == 'O' && Slots[i -  3] == 'O' && Slots[i - 6] == 'O') || (Slots[i] == 'O' && Slots[i - 1] == 'O' && Slots[i - 2] == 'O')){
+        PrintBoard(Slots);
+        
+        printf("Player 2 wins\n");
+        
+        Replay(Mode);
+      }
+    }
   }
 }
 
@@ -97,7 +129,7 @@ void PvPMatch(){
         if (Moves[input - 1] == ' '){
           Moves[input - 1] = 'X';
 
-          CheckWinCondition(Moves);
+          CheckWinCondition(Moves, true);
 
           break;
         }
@@ -118,7 +150,7 @@ void PvPMatch(){
         if (Moves[input - 1] == ' '){
           Moves[input - 1] = 'O';
 
-          CheckWinCondition(Moves);
+          CheckWinCondition(Moves, true);
 
           break;
         }
@@ -132,4 +164,32 @@ void PvPMatch(){
 
 void Quit(){
   exit(0);
+}
+
+void Replay(bool Mode){
+  char input;
+
+  printf("Play again? (y/n)\n");
+
+  while (true){
+    while ((getchar()) != '\n'){
+    };
+      
+    scanf("%c", &input);
+
+    if (tolower(input) == 'y'){
+      if (Mode){
+        PvPMatch();
+      }
+      else{
+        PvCMatch();
+      }
+    }
+    else if(tolower(input) == 'n'){
+      exit(0);
+    }
+    else{
+      printf("Invalid input\n");
+    } 
+  }
 }
