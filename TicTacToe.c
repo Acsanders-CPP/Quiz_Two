@@ -15,7 +15,7 @@ void Replay(bool Mode);
 
 
 int main(){
-    PrintMainMenu();
+  PrintMainMenu();
 }
 
 void CheckTieCondition(char Slots[9], bool Mode){
@@ -37,7 +37,7 @@ void CheckTieCondition(char Slots[9], bool Mode){
         TieCount++;
       }
     }
-    printf("Tie Count: %d\n", TieCount);
+    //printf("Tie Count: %d\ni: %d\n", TieCount, i);
   }
 
   if (TieCount == 3){
@@ -107,13 +107,13 @@ void PrintBoard(char Slots[9]){
 }
 
 void PrintMainMenu(){
-  int input;
+  int Input;
   
     printf("============================\nTic-Tac-Toe\n\n1.) Player vs. Player\n2.) Player vs. Computer\n3.) Quit\n============================\n\nEnter input:\n");
 
-  scanf("%d", &input);
+  scanf("%d", &Input);
 
-  switch (input){
+  switch (Input){
     case 1:
       PvPMatch();
       break;
@@ -129,28 +129,80 @@ void PrintMainMenu(){
 //cpu match code
 
 void PvCMatch(){
-  
-}
-//match play code
-
-void PvPMatch(){
-  int input;
+  int ComputerMove;
+  int Input;
   char Moves[] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',};
-  bool turn = true;
+  bool Turn = true;
 
   while (true){
     PrintBoard(Moves);
 
-    if(turn){
-      turn = !turn;
+    if(Turn){
+      Turn = !Turn;
     
       printf("Player 1's turn. Enter a number (1 -9):\n");
 
       while (true){
-        scanf("%d", &input);
+        scanf("%d", &Input);
 
-        if (Moves[input - 1] == ' '){
-          Moves[input - 1] = 'X';
+        if (Moves[Input - 1] == ' '){
+          Moves[Input - 1] = 'X';
+
+          CheckWinCondition(Moves, false);
+
+          CheckTieCondition(Moves, false);
+
+          break;
+        }
+        else{
+          printf("Invalid Input\n");
+        }
+      }
+
+    
+    }else{
+      Turn = !Turn;
+
+      srand(time());
+    
+      printf("Player 2's turn\n");
+
+      while (true){
+        ComputerMove = rand() % 9;
+        
+        if (Moves[ComputerMove] == ' '){
+          Moves[ComputerMove] = 'O';
+
+          CheckWinCondition(Moves, false);
+
+          CheckTieCondition(Moves, false);
+
+          break;
+        }
+      }
+    }
+  }
+}
+//match play code
+
+void PvPMatch(){
+  int Input;
+  char Moves[] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',};
+  bool Turn = true;
+
+  while (true){
+    PrintBoard(Moves);
+
+    if(Turn){
+      Turn = !Turn;
+    
+      printf("Player 1's turn. Enter a number (1 -9):\n");
+
+      while (true){
+        scanf("%d", &Input);
+
+        if (Moves[Input - 1] == ' '){
+          Moves[Input - 1] = 'X';
 
           CheckWinCondition(Moves, true);
 
@@ -165,15 +217,15 @@ void PvPMatch(){
 
     
     }else{
-      turn = !turn;
+      Turn = !Turn;
     
       printf("Player 2's turn. Enter a number (1 -9):\n");
 
       while (true){
-        scanf("%d", &input);
+        scanf("%d", &Input);
 
-        if (Moves[input - 1] == ' '){
-          Moves[input - 1] = 'O';
+        if (Moves[Input - 1] == ' '){
+          Moves[Input - 1] = 'O';
 
           CheckWinCondition(Moves, true);
 
@@ -194,7 +246,7 @@ void Quit(){
 }
 
 void Replay(bool Mode){
-  char input;
+  char Input;
 
   printf("Play again? (y/n)\n");
 
@@ -202,9 +254,9 @@ void Replay(bool Mode){
     while ((getchar()) != '\n'){
     };
       
-    scanf("%c", &input);
+    scanf("%c", &Input);
 
-    if (tolower(input) == 'y'){
+    if (tolower(Input) == 'y'){
       if (Mode){
         PvPMatch();
       }
@@ -212,7 +264,7 @@ void Replay(bool Mode){
         PvCMatch();
       }
     }
-    else if(tolower(input) == 'n'){
+    else if(tolower(Input) == 'n'){
       exit(0);
     }
     else{
