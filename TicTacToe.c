@@ -4,6 +4,8 @@
 
 //user interface for user navagation
 
+void CheckTieCondition(char Slots[9]);
+void CheckWinCondition(char Slots[9]);
 void PrintBoard(char Slots[9]);
 void PrintMainMenu();
 void PvCMatch();
@@ -13,6 +15,21 @@ void Quit();
 
 int main(){
     PrintMainMenu();
+}
+
+void CheckTieCondition(char Slots[9]){
+  
+}
+
+void CheckWinCondition(char Slots[9]){
+  /*absolutely vile but I'm lazy rn
+  if ((Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') || (Slots[3] == 'X' && Slots[4] == 'X' && Slots[5] == 'X') || (Slots[6] == 'X' && Slots[7] == 'X' && Slots[8] == 'X') || (Slots[0] == 'X' && Slots[3] == 'X' && Slots[6] == 'X') || (Slots[1] == 'X' && Slots[4] == 'X' && Slots[7] == 'X') || (Slots[0] == 'X' && Slots[1] == 'X' && Slots[2] == 'X') ||)*/
+
+  for (int i = 0; i  < 10; i += 4){
+    if (i == 0){
+      if (Slots[i] == 'X' && Slots[i + 1] == 'X' && Slots[i + 2] == 'X')
+    }
+  }
 }
 
 void PrintBoard(char Slots[9]){
@@ -66,7 +83,7 @@ void PvPMatch(){
         if (Moves[input - 1] == ' '){
           Moves[input - 1] = 'X';
 
-          //CheckWinCondition();
+          CheckWinCondition();
 
           break;
         }
